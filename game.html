@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Part 6</title>
+    <title>Making your first Phaser 3 Game - Part 7</title>
     <script src="libs/phaser.min.js"></script>
     <style type="text/css">
         body {
@@ -34,6 +34,7 @@
 
     var player;
     var platforms;
+    var cursors;
 
     var game = new Phaser.Game(config);
 
@@ -83,11 +84,36 @@
             repeat: -1
         });
 
+        cursors = this.input.keyboard.createCursorKeys();
+
         this.physics.add.collider(player, platforms);
     }
 
     function update ()
     {
+        if (cursors.left.isDown)
+        {
+            player.setVelocityX(-160);
+
+            player.anims.play('left', true);
+        }
+        else if (cursors.right.isDown)
+        {
+            player.setVelocityX(160);
+
+            player.anims.play('right', true);
+        }
+        else
+        {
+            player.setVelocityX(0);
+
+            player.anims.play('turn');
+        }
+
+        if (cursors.up.isDown && player.body.touching.down)
+        {
+            player.setVelocityY(-330);
+        }
     }
 
 </script>
