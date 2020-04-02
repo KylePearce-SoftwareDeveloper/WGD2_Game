@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Part 5</title>
+    <title>Making your first Phaser 3 Game - Part 6</title>
     <script src="libs/phaser.min.js"></script>
     <style type="text/css">
         body {
@@ -82,6 +82,8 @@
             frameRate: 10,
             repeat: -1
         });
+
+        this.physics.add.collider(player, platforms);
     }
 
     function update ()
