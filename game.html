@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Part 8</title>
+    <title>Making your first Phaser 3 Game - Part 9</title>
     <script src="libs/phaser.min.js"></script>
     <style type="text/css">
         body {
@@ -36,6 +36,8 @@
     var stars;
     var platforms;
     var cursors;
+    var score = 0;
+    var scoreText;
 
     var game = new Phaser.Game(config);
 
@@ -99,6 +101,8 @@
 
         });
 
+        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(stars, platforms);
 
@@ -135,6 +139,9 @@
     function collectStar (player, star)
     {
         star.disableBody(true, true);
+
+        score += 10;
+        scoreText.setText('Score: ' + score);
     }
 
 </script>
