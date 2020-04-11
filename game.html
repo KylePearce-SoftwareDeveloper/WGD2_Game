@@ -21,7 +21,7 @@
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 300 },
+                gravity: { y: 0 },
                 debug: false
             }
         },
@@ -41,7 +41,7 @@
     var redScore = 0;
     var gameOver = false;
     var blueScoreText;
-    var redScoreText
+    var redScoreText;
     var game = new Phaser.Game(config);
     var blueTeamBase;
     var redTeamBase;
@@ -67,34 +67,15 @@
         barriers.create(50, 250, 'barriers');
         barriers.create(750, 220, 'barriers');
 
-        //create bases
-        blueTeamBase = this.physics.add.group({
-            key: 'blueBase',
-            setXY: { x: 760, y:560 },
-            allowGravity: false,
-        });
-
-        redTeamBase = this.physics.add.group({
-            key: 'redBase',
-            setXY: { x: 45, y:87 },
-            allowGravity: false,
-        });
-
-         // The player and its settings
+         // creating objects
+        blueTeamBase = this.physics.add.sprite(760, 560, 'blueBase');
+        redTeamBase = this.physics.add.sprite(45, 87, 'redBase');
         player1 = this.physics.add.sprite(100, 450, 'player1');
-        player1.body.setAllowGravity(false);
-        player1.setCollideWorldBounds(true);
-
+        player1.body.setAllowGravity(false).setCollideWorldBounds(true);
+        flag = this.physics.add.sprite(400, 300, 'flag');
+        
         //  Input Events
         cursors = this.input.keyboard.createCursorKeys();
-
-        flag = this.physics.add.group({
-            key: 'flag',
-             setXY: { x: 400, y: 300, stepX: 70 },
-             allowGravity: false,
-        });
-
-
 
         //  The scores
         redScoreText = this.add.text(16, 16, 'Red Score: ' + redScore, { fontSize: '32px', fill: '#000' });
