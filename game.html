@@ -73,7 +73,7 @@
         player1 = this.physics.add.sprite(100, 450, 'player1');
         player1.body.setAllowGravity(false).setCollideWorldBounds(true);
         flag = this.physics.add.sprite(400, 300, 'flag');
-        
+
         //  Input Events
         cursors = this.input.keyboard.createCursorKeys();
 
@@ -83,12 +83,11 @@
 
         //  Collide the player and the flag with the platforms
         this.physics.add.collider(player1, barriers);
-        this.physics.add.collider(flag, blueTeamBase);
 
         //  Checks to see if the player overlaps with any of the collectible, if he does call the collectStar function
         this.physics.add.overlap(player1, flag, collectFlag, null, this);
-        //this.physics.add.overlap(flag, blueTeamBase, flagToBlueBaseCollide(), null, this);
-
+        this.physics.add.overlap(flag, blueTeamBase, flagToBlueBaseCollide, null, this);
+        this.physics.add.overlap(flag, redTeamBase, flagToRedBaseCollide, null, this);
     }
 
 
@@ -132,23 +131,23 @@
         //  Add and update the score
          //redScoreText.setText('Score: ' + score);
     }
-    function flagToBlueBaseCollide (flag)
+    function flagToBlueBaseCollide ()
     {
         //flag.disableBody(true, true);
-        flag.x = self.flag.x;
-        flag.y = self.flag.y;
+        flag.x = 400;
+        flag.y = 300;
         //  Add and update the score
         blueScore += 1;
-        blueTeamBase.setText('Blue Score: ' + blueScore);
+        blueScoreText.setText('Blue Score: ' + blueScore);
     }
-    function flagToRedBaseCollide (flag)
+    function flagToRedBaseCollide ()
     {
         //flag.disableBody(true, true);
-        flag.x = self.flag.x;
-        flag.y = self.flag.y;
+        flag.x = 400;
+        flag.y = 300;
         //  Add and update the score
         redScore += 1;
-        redTeamBase.setText('Red Score: ' + redScore);
+        redScoreText.setText('Red Score: ' + redScore);
     }
 
    // gameOver = true;
