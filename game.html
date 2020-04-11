@@ -32,24 +32,27 @@
         }
     };
 
-    var player;
-    var collectable;
-     var barriers;
+    var player1;
+    var player2;
+    var flag;
+    var barriers;
     var cursors;
-    var score = 0;
+    var blueScore = 0;
+    var redScore = 0;
     var gameOver = false;
-    var scoreText;
-     var game = new Phaser.Game(config);
+    var blueScoreText;
+    var redScoreText
+    var game = new Phaser.Game(config);
     var blueTeamBase;
     var redTeamBase;
      function preload ()
     {
         this.load.image('background', 'assets/background.png');
-        this.load.image('redBase', 'assets/redBase2.png');
-        this.load.image('blueBase', 'assets/blueBase1.png');
         this.load.image('barriers', 'assets/barriers.png',);
         this.load.image('flag', 'assets/flag.png');
-         this.load.spritesheet('dude', 'assets/player.png', { frameWidth: 32, frameHeight: 48 });
+        this.load.image('player1', 'assets/player.png');
+        this.load.image('redBase', 'assets/redBase2.png');
+        this.load.image('blueBase', 'assets/blueBase1.png');
     }
 
     function create ()
@@ -64,27 +67,12 @@
         barriers.create(50, 250, 'barriers');
         barriers.create(750, 220, 'barriers');
 
-         // The player and its settings
-        player = this.physics.add.sprite(100, 450, 'dude');
-        player.body.setAllowGravity(false);
-         player.setCollideWorldBounds(true);
-
-        //  Input Events
-        cursors = this.input.keyboard.createCursorKeys();
-
-
-         collectable = this.physics.add.group({
-            key: 'flag',
-             setXY: { x: 400, y: 300, stepX: 70 },
-             allowGravity: false,
-        });
-
         //create bases
         blueTeamBase = this.physics.add.group({
             key: 'blueBase',
             setXY: { x: 760, y:560 },
             allowGravity: false,
-          });
+        });
 
         redTeamBase = this.physics.add.group({
             key: 'redBase',
@@ -92,16 +80,33 @@
             allowGravity: false,
         });
 
-        //  The score
-        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+         // The player and its settings
+        player1 = this.physics.add.sprite(100, 450, 'player1');
+        player1.body.setAllowGravity(false);
+        player1.setCollideWorldBounds(true);
+
+        //  Input Events
+        cursors = this.input.keyboard.createCursorKeys();
+
+        flag = this.physics.add.group({
+            key: 'flag',
+             setXY: { x: 400, y: 300, stepX: 70 },
+             allowGravity: false,
+        });
+
+
+
+        //  The scores
+        redScoreText = this.add.text(16, 16, 'Red Score: ' + redScore, { fontSize: '32px', fill: '#000' });
+        blueScoreText = this.add.text(420, 16, 'Blue Score: ' + blueScore, { fontSize: '32px', fill: '#000' });
 
         //  Collide the player and the flag with the platforms
-        this.physics.add.collider(player, barriers);
-        this.physics.add.collider(collectable, blueTeamBase);
+        this.physics.add.collider(player1, barriers);
+        this.physics.add.collider(flag, blueTeamBase);
 
-        //  Checks to see if the player overlaps with any of the collectable, if he does call the collectStar function
-        this.physics.add.overlap(player, collectable, collectFlag, null, this);
-        //this.physics.add.overlap(collectable, blueTeamBase, flagToBlueBaseCollide(), null, this);
+        //  Checks to see if the player overlaps with any of the collectible, if he does call the collectStar function
+        this.physics.add.overlap(player1, flag, collectFlag, null, this);
+        //this.physics.add.overlap(flag, blueTeamBase, flagToBlueBaseCollide(), null, this);
 
     }
 
@@ -114,28 +119,28 @@
         }
         if (cursors.left.isDown)
         {
-            player.setVelocityX(-160);
+            player1.setVelocityX(-160);
 
          }
         else if (cursors.right.isDown)
         {
-            player.setVelocityX(160);
+            player1.setVelocityX(160);
 
         }
         else if (cursors.up.isDown)
         {
-            player.setVelocityY(-160);
+            player1.setVelocityY(-160);
 
         }
         else if (cursors.down.isDown)
         {
-            player.setVelocityY(160);
+            player1.setVelocityY(160);
 
         }
         else
         {
-            player.setVelocityX(0);
-            player.setVelocityY(0);
+            player1.setVelocityX(0);
+            player1.setVelocityY(0);
          }
     }
     function collectFlag (player, flag)
@@ -144,15 +149,25 @@
        flag.x = player.x;
        flag.y = player.y;
         //  Add and update the score
-         scoreText.setText('Score: ' + score);
+         //redScoreText.setText('Score: ' + score);
     }
     function flagToBlueBaseCollide (flag)
     {
         //flag.disableBody(true, true);
-        flag.x = self.collectable.x;
-        flag.y = self.collectable.y;
+        flag.x = self.flag.x;
+        flag.y = self.flag.y;
         //  Add and update the score
-        scoreText.setText('Score: ' + score);
+        blueScore += 1;
+        blueTeamBase.setText('Blue Score: ' + blueScore);
+    }
+    function flagToRedBaseCollide (flag)
+    {
+        //flag.disableBody(true, true);
+        flag.x = self.flag.x;
+        flag.y = self.flag.y;
+        //  Add and update the score
+        redScore += 1;
+        redTeamBase.setText('Red Score: ' + redScore);
     }
 
    // gameOver = true;
