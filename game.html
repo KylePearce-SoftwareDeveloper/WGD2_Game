@@ -45,20 +45,29 @@
     var game = new Phaser.Game(config);
     var blueTeamBase;
     var redTeamBase;
+    var timerText;
+    var timedEvent;
+    var initialTime;
+
      function preload ()
     {
         this.load.image('background', 'assets/background.png');
         this.load.image('barriers', 'assets/barriers.png',);
         this.load.image('flag', 'assets/flag.png');
         this.load.image('player1', 'assets/player.png');
-        this.load.image('redBase', 'assets/redBase2.png');
-        this.load.image('blueBase', 'assets/blueBase1.png');
+        this.load.image('redBase', 'assets/redBase.png');
+        this.load.image('blueBase', 'assets/blueBase.png');
     }
 
     function create ()
     {
         //  A simple background for our game
         this.add.image(400, 300, 'background');
+
+        //set timer to 5 minutes
+        initialTime = 300;
+        // Each 1000 ms call onEvent
+        timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
 
         //  The barriers group contains the ground and the 2 ledges we can jump on
         barriers = this.physics.add.staticGroup();
@@ -78,8 +87,12 @@
         cursors = this.input.keyboard.createCursorKeys();
 
         //  The scores
-        redScoreText = this.add.text(16, 16, 'Red Score: ' + redScore, { fontSize: '32px', fill: '#000' });
-        blueScoreText = this.add.text(420, 16, 'Blue Score: ' + blueScore, { fontSize: '32px', fill: '#000' });
+        redScoreText = this.add.text(70, 16, 'Red Score: ' + redScore, { fontSize: '32px', fill: '#000' });
+        blueScoreText = this.add.text(470, 16, 'Blue Score: ' + blueScore, { fontSize: '32px', fill: '#000' });
+        timerText = this.add.text(372, 16, '', { fontSize: '32px', fill: 'black' });
+
+
+
 
         //  Collide the player and the flag with the platforms
         this.physics.add.collider(player1, barriers);
@@ -91,11 +104,12 @@
     }
 
 
+
     function update ()
     {
         if (gameOver)
         {
-            return;
+          return;
         }
         if (cursors.left.isDown)
         {
@@ -150,7 +164,29 @@
         redScoreText.setText('Red Score: ' + redScore);
     }
 
-   // gameOver = true;
+    function formatTime(seconds){
+        // Minutes
+        var minutes = Math.floor(seconds/60);
+        // Seconds
+        var partInSeconds = seconds%60;
+        // Adds left zeros to seconds
+        partInSeconds = partInSeconds.toString().padStart(2,'0');
+        // Returns formatted time
+        return `${minutes}:${partInSeconds}`;
+    }
+
+    function onEvent ()
+    {
+        initialTime -= 1; // One second
+        timerText.setText(formatTime(initialTime));
+
+        if (initialTime <= -1 ){
+             gameOver = true;
+            initialTime.stop();
+
+        }
+    }
+
 
 </script>
 
