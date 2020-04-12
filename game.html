@@ -34,9 +34,12 @@
 
     var player1;
     var player2;
+    var player3;
+    var player4;
     var flag;
     var barriers;
     var cursors;
+    var keys;
     var blueScore = 0;
     var redScore = 0;
     var gameOver = false;
@@ -54,9 +57,10 @@
         this.load.image('background', 'assets/background.png');
         this.load.image('barriers', 'assets/barriers.png',);
         this.load.image('flag', 'assets/flag.png');
-        this.load.image('player1', 'assets/player.png');
-        this.load.image('redBase', 'assets/redBase.png');
-        this.load.image('blueBase', 'assets/blueBase.png');
+        this.load.image('bluePlayer', 'assets/bluePlayer.png');
+        this.load.image('redPlayer', 'assets/redPlayer.png');
+        this.load.image('redBase', 'assets/redBase2.png');
+        this.load.image('blueBase', 'assets/blueBase1.png');
     }
 
     function create ()
@@ -65,12 +69,13 @@
         this.add.image(400, 300, 'background');
 
         //set timer to 5 minutes
-        initialTime = 300;
+        initialTime = 301;
         // Each 1000 ms call onEvent
         timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
 
         //  The barriers group contains the ground and the 2 ledges we can jump on
         barriers = this.physics.add.staticGroup();
+
         // create  barriers
         barriers.create(600, 400, 'barriers');
         barriers.create(50, 250, 'barriers');
@@ -79,20 +84,37 @@
          // creating objects
         blueTeamBase = this.physics.add.sprite(760, 560, 'blueBase');
         redTeamBase = this.physics.add.sprite(45, 87, 'redBase');
-        player1 = this.physics.add.sprite(100, 450, 'player1');
+        player1 = this.physics.add.sprite(745, 490, 'bluePlayer');
         player1.body.setAllowGravity(false).setCollideWorldBounds(true);
+        player2 = this.physics.add.sprite(690, 550, 'bluePlayer');
+        player2.body.setAllowGravity(false).setCollideWorldBounds(true);
+        player3 = this.physics.add.sprite(115, 95, 'redPlayer');
+        player3.body.setAllowGravity(false).setCollideWorldBounds(true);
+        player4 = this.physics.add.sprite(60, 155, 'redPlayer');
+        player4.body.setAllowGravity(false).setCollideWorldBounds(true);
         flag = this.physics.add.sprite(400, 300, 'flag');
 
         //  Input Events
         cursors = this.input.keyboard.createCursorKeys();
+        keys = this.input.keyboard.addKeys(
+            {   W:Phaser.Input.Keyboard.KeyCodes.W,
+                S:Phaser.Input.Keyboard.KeyCodes.S,
+                A:Phaser.Input.Keyboard.KeyCodes.A,
+                D:Phaser.Input.Keyboard.KeyCodes.D,
+                Y:Phaser.Input.Keyboard.KeyCodes.Y,
+                H:Phaser.Input.Keyboard.KeyCodes.H,
+                G:Phaser.Input.Keyboard.KeyCodes.G,
+                J:Phaser.Input.Keyboard.KeyCodes.J,
+                ONE:Phaser.Input.Keyboard.KeyCodes.ONE,
+                TWO:Phaser.Input.Keyboard.KeyCodes.TWO,
+                THREE:Phaser.Input.Keyboard.KeyCodes.THREE,
+                FOUR:Phaser.Input.Keyboard.KeyCodes.FOUR,
+            });
 
         //  The scores
         redScoreText = this.add.text(70, 16, 'Red Score: ' + redScore, { fontSize: '32px', fill: '#000' });
         blueScoreText = this.add.text(470, 16, 'Blue Score: ' + blueScore, { fontSize: '32px', fill: '#000' });
         timerText = this.add.text(372, 16, '', { fontSize: '32px', fill: 'black' });
-
-
-
 
         //  Collide the player and the flag with the platforms
         this.physics.add.collider(player1, barriers);
@@ -104,38 +126,44 @@
     }
 
 
-
     function update ()
     {
         if (gameOver)
         {
-          return;
+            return;
         }
-        if (cursors.left.isDown)
-        {
-            player1.setVelocityX(-160);
+        movePlayer(player1,cursors.up, cursors.down, cursors.left, cursors.right);
+        movePlayer(player2, keys.W, keys.S, keys.A, keys.D);
+        movePlayer(player3, keys.Y, keys.H, keys.G, keys.J);
+        movePlayer(player4, keys.ONE, keys.TWO, keys.THREE, keys.FOUR);
+    }
 
-         }
-        else if (cursors.right.isDown)
+    function movePlayer(player, up, down, left, right)
+    {
+        if (left.isDown)
         {
-            player1.setVelocityX(160);
-
-        }
-        else if (cursors.up.isDown)
-        {
-            player1.setVelocityY(-160);
+            player.setVelocityX(-160);
 
         }
-        else if (cursors.down.isDown)
+        else if (right.isDown)
         {
-            player1.setVelocityY(160);
+            player.setVelocityX(160);
 
+        }
+        else if (up.isDown)
+        {
+            player.setVelocityY(-160);
+
+        }
+        else if (down.isDown)
+        {
+            player.setVelocityY(160);
         }
         else
         {
-            player1.setVelocityX(0);
-            player1.setVelocityY(0);
-         }
+            player.setVelocityX(0);
+            player.setVelocityY(0);
+        }
     }
     function collectFlag (player, flag)
     {
@@ -181,12 +209,13 @@
         timerText.setText(formatTime(initialTime));
 
         if (initialTime <= -1 ){
-             gameOver = true;
+            gameOver = true;
             initialTime.stop();
 
         }
     }
 
+   // gameOver = true;
 
 </script>
 
