@@ -105,10 +105,11 @@
                 H:Phaser.Input.Keyboard.KeyCodes.H,
                 G:Phaser.Input.Keyboard.KeyCodes.G,
                 J:Phaser.Input.Keyboard.KeyCodes.J,
-                ONE:Phaser.Input.Keyboard.KeyCodes.ONE,
-                TWO:Phaser.Input.Keyboard.KeyCodes.TWO,
-                THREE:Phaser.Input.Keyboard.KeyCodes.THREE,
-                FOUR:Phaser.Input.Keyboard.KeyCodes.FOUR,
+                NUMPAD_EIGHT:Phaser.Input.Keyboard.KeyCodes.NUMPAD_FIVE,
+                NUMPAD_TWO:Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO,
+                NUMPAD_FOUR:Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE,
+                NUMPAD_SIX:Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE,
+
             });
 
         //  The scores
@@ -118,9 +119,17 @@
 
         //  Collide the player and the flag with the platforms
         this.physics.add.collider(player1, barriers);
+        this.physics.add.collider(player2, barriers);
+        this.physics.add.collider(player3, barriers);
+        this.physics.add.collider(player4, barriers);
+
+
+
 
         //  Checks to see if the player overlaps with any of the collectible, if he does call the collectStar function
         this.physics.add.overlap(player1, flag, collectFlag, null, this);
+        this.physics.add.overlap(player3, flag, collectFlag, null, this);
+
         this.physics.add.overlap(flag, blueTeamBase, flagToBlueBaseCollide, null, this);
         this.physics.add.overlap(flag, redTeamBase, flagToRedBaseCollide, null, this);
     }
@@ -133,9 +142,9 @@
             return;
         }
         movePlayer(player1,cursors.up, cursors.down, cursors.left, cursors.right);
-        movePlayer(player2, keys.W, keys.S, keys.A, keys.D);
-        movePlayer(player3, keys.Y, keys.H, keys.G, keys.J);
-        movePlayer(player4, keys.ONE, keys.TWO, keys.THREE, keys.FOUR);
+        movePlayer(player2, keys.NUMPAD_FIVE, keys.NUMPAD_TWO, keys.NUMPAD_ONE, keys.NUMPAD_THREE);
+        movePlayer(player3, keys.W, keys.S, keys.A, keys.D);
+        movePlayer(player4, keys.Y, keys.H, keys.G, keys.J);
     }
 
     function movePlayer(player, up, down, left, right)
