@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a736d210-f4ac-4ad4-8725-055a6dc57501" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/blueGunner.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/bullet.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/redGunner.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/target.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/topdown_combatMechanics.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bluePlayer.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/blueRunner.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/redPlayer.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/redRunner.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/game.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,6 +66,7 @@
       <workItem from="1586707633721" duration="128000" />
       <workItem from="1586795420301" duration="8533000" />
       <workItem from="1586805625512" duration="260000" />
+      <workItem from="1586812523548" duration="5475000" />
     </task>
     <servers />
   </component>

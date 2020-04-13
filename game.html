@@ -32,6 +32,9 @@
         }
     };
 
+    //RANDOM BARRIER LOCATION LOGIC
+    var barrierTimmer = 0;
+
     var player1;
     var player2;
     var player3;
@@ -111,7 +114,6 @@
      function preload ()
     {
         this.load.image('background', 'assets/background.png');
-        this.load.image('barriers', 'assets/barriers.png',);
         this.load.image('flag', 'assets/flag.png');
         this.load.image('blueGunner', 'assets/blueGunner.png');
         this.load.image('blueRunner', 'assets/blueRunner.png');
@@ -121,6 +123,10 @@
         this.load.image('blueBase', 'assets/blueBase1.png');
         this.load.image('bullet', 'assets/bullet.png');
         this.load.image('target', 'assets/target.png');
+        //RANDOM BARRIER LOCATION LOGIC
+        this.load.image('vertBarrier', 'assets/vertBarrier.png',);
+        this.load.image('horzBarrier', 'assets/horzBarrier.png',);
+        this.load.image('cubeBarrier', 'assets/cubeBarrier.png',);
     }
 
     function create ()
@@ -135,13 +141,15 @@
         // Each 1000 ms call onEvent
         timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
 
-        //  The barriers group contains the ground and the 2 ledges we can jump on
+        //RANDOM BARRIER LOCATION LOGIC
         barriers = this.physics.add.staticGroup();
-
         // create  barriers
-        barriers.create(600, 400, 'barriers');
-        barriers.create(50, 250, 'barriers');
-        barriers.create(750, 220, 'barriers');
+        barriers.create(100, 300, 'vertBarrier');
+        barriers.create(400, 500, 'horzBarrier');
+        barriers.create(300, 200, 'horzBarrier');
+        barriers.create(600, 300, 'vertBarrier');
+        barriers.create(250, 350, 'cubeBarrier');
+        barriers.create(470, 270, 'cubeBarrier');
 
          // creating objects
         blueTeamBase = this.physics.add.sprite(760, 560, 'blueBase');
@@ -245,6 +253,35 @@
         movePlayer(player2, keys.NUMPAD_FIVE, keys.NUMPAD_TWO, keys.NUMPAD_ONE, keys.NUMPAD_THREE, gunnerSpeed);
         movePlayer(player3, keys.W, keys.S, keys.A, keys.D, runnerSpeed);
         movePlayer(player4, keys.Y, keys.H, keys.G, keys.J, gunnerSpeed);
+
+        //RANDOM BARRIER LOCATION LOGIC
+        barrierTimmer ++;
+        if(barrierTimmer > 2040) {
+            //DELETE CURRENT BARRIERS
+            barriers.clear(true);
+            //CREATE NEW RANDOM POSITIONS FOR BARRIERS
+            var x1 = Phaser.Math.Between(0, 800);
+            var y1 = Phaser.Math.Between(0, 600);
+            var x2 = Phaser.Math.Between(0, 800);
+            var y2 = Phaser.Math.Between(0, 600);
+            var x3 = Phaser.Math.Between(0, 800);
+            var y3 = Phaser.Math.Between(0, 600);
+            var x4 = Phaser.Math.Between(0, 800);
+            var y4 = Phaser.Math.Between(0, 600);
+            var x5 = Phaser.Math.Between(0, 800);
+            var y5 = Phaser.Math.Between(0, 600);
+            var x6 = Phaser.Math.Between(0, 800);
+            var y6 = Phaser.Math.Between(0, 600);
+            //CREATE NEW BARRIERS WITH RANDOM POSITIONS
+            barriers.create(x1, y1, 'vertBarrier');
+            barriers.create(x2, y2, 'vertBarrier');
+            barriers.create(x3, y3, 'horzBarrier');
+            barriers.create(x4, y4, 'horzBarrier');
+            barriers.create(x5, y5, 'cubeBarrier');
+            barriers.create(x6, y6, 'cubeBarrier');
+            //RESET TIMMER
+            barrierTimmer = 0;
+        }
     }
 
     function movePlayer(player, up, down, left, right, velocity)
