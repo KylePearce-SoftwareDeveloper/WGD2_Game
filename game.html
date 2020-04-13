@@ -51,22 +51,84 @@
     var timerText;
     var timedEvent;
     var initialTime;
+    var runnerSpeed = 180;
+    var gunnerSpeed = 140;
+
+    var playerBullets;
+    var reticle;
+
+    var Bullet = new Phaser.Class({
+        Extends: Phaser.GameObjects.Image,
+        initialize:
+        // Bullet Constructor
+            function Bullet (scene)
+            {
+                Phaser.GameObjects.Image.call(this, scene, 0, 0, 'bullet');
+                this.speed = 1;
+                this.born = 0;
+                this.direction = 0;
+                this.xSpeed = 0;
+                this.ySpeed = 0;
+                this.setSize(12, 12, true);
+            },
+
+        // Fires a bullet from the player to the reticle
+        fire: function (shooter, target)
+        {
+            this.setPosition(shooter.x, shooter.y); // Initial position
+            this.direction = Math.atan( (target.x-this.x) / (target.y-this.y));
+
+            // Calculate X and y velocity of bullet to moves it from shooter to target
+            if (target.y >= this.y)
+            {
+                this.xSpeed = this.speed*Math.sin(this.direction);
+                this.ySpeed = this.speed*Math.cos(this.direction);
+            }
+            else
+            {
+                this.xSpeed = -this.speed*Math.sin(this.direction);
+                this.ySpeed = -this.speed*Math.cos(this.direction);
+            }
+
+            this.rotation = shooter.rotation; // angle bullet with shooters rotation
+            this.born = 0; // Time since new bullet spawned
+        },
+
+        // Updates the position of the bullet each cycle
+        update: function (time, delta)
+        {
+            this.x += this.xSpeed * delta;
+            this.y += this.ySpeed * delta;
+            this.born += delta;
+            if (this.born > 1800)
+            {
+                this.setActive(false);
+                this.setVisible(false);
+            }
+        }
+    });
 
      function preload ()
     {
         this.load.image('background', 'assets/background.png');
         this.load.image('barriers', 'assets/barriers.png',);
         this.load.image('flag', 'assets/flag.png');
-        this.load.image('bluePlayer', 'assets/bluePlayer.png');
-        this.load.image('redPlayer', 'assets/redPlayer.png');
+        this.load.image('blueGunner', 'assets/blueGunner.png');
+        this.load.image('blueRunner', 'assets/blueRunner.png');
+        this.load.image('redGunner', 'assets/redGunner.png');
+        this.load.image('redRunner', 'assets/redRunner.png');
         this.load.image('redBase', 'assets/redBase2.png');
         this.load.image('blueBase', 'assets/blueBase1.png');
+        this.load.image('bullet', 'assets/bullet.png');
+        this.load.image('target', 'assets/target.png');
     }
 
     function create ()
     {
         //  A simple background for our game
         this.add.image(400, 300, 'background');
+
+        playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
 
         //set timer to 5 minutes
         initialTime = 301;
@@ -84,15 +146,18 @@
          // creating objects
         blueTeamBase = this.physics.add.sprite(760, 560, 'blueBase');
         redTeamBase = this.physics.add.sprite(45, 87, 'redBase');
-        player1 = this.physics.add.sprite(745, 490, 'bluePlayer');
+        player1 = this.physics.add.sprite(745, 490, 'blueRunner');
         player1.body.setAllowGravity(false).setCollideWorldBounds(true);
-        player2 = this.physics.add.sprite(690, 550, 'bluePlayer');
+        player2 = this.physics.add.sprite(690, 550, 'blueGunner');
         player2.body.setAllowGravity(false).setCollideWorldBounds(true);
-        player3 = this.physics.add.sprite(115, 95, 'redPlayer');
+        player3 = this.physics.add.sprite(115, 95, 'redRunner');
         player3.body.setAllowGravity(false).setCollideWorldBounds(true);
-        player4 = this.physics.add.sprite(60, 155, 'redPlayer');
+        player4 = this.physics.add.sprite(60, 155, 'redGunner');
         player4.body.setAllowGravity(false).setCollideWorldBounds(true);
         flag = this.physics.add.sprite(400, 300, 'flag');
+
+        reticle = this.physics.add.sprite(800, 700, 'target');
+        reticle.setOrigin(0.5, 0.5).setDisplaySize(15, 15).setCollideWorldBounds(true);
 
         //  Input Events
         cursors = this.input.keyboard.createCursorKeys();
@@ -132,6 +197,41 @@
 
         this.physics.add.overlap(flag, blueTeamBase, flagToBlueBaseCollide, null, this);
         this.physics.add.overlap(flag, redTeamBase, flagToRedBaseCollide, null, this);
+
+        // Fires bullet from player on left click of mouse
+        this.input.on('pointerdown', function (pointer, time, lastFired) {
+            if (player1.active === false)
+                return;
+
+            // Get bullet from bullets group
+            var bullet = playerBullets.get().setActive(true).setVisible(true);
+
+            if (bullet)
+            {
+                bullet.fire(player1, reticle);
+                this.physics.add.collider(enemy, bullet, enemyHitCallback);
+            }
+        }, this);
+
+        // Pointer lock will only work after mousedown
+        game.canvas.addEventListener('mousedown', function () {
+            game.input.mouse.requestPointerLock();
+        });
+
+        // Exit pointer lock when Q or escape (by default) is pressed.
+        this.input.keyboard.on('keydown_Q', function (event) {
+            if (game.input.mouse.locked)
+                game.input.mouse.releasePointerLock();
+        }, 0, this);
+
+        // Move reticle upon locked pointer move
+        this.input.on('pointermove', function (pointer) {
+            if (this.input.mouse.locked)
+            {
+                reticle.x += pointer.movementX;
+                reticle.y += pointer.movementY;
+            }
+        }, this);
     }
 
 
@@ -141,32 +241,32 @@
         {
             return;
         }
-        movePlayer(player1,cursors.up, cursors.down, cursors.left, cursors.right);
-        movePlayer(player2, keys.NUMPAD_FIVE, keys.NUMPAD_TWO, keys.NUMPAD_ONE, keys.NUMPAD_THREE);
-        movePlayer(player3, keys.W, keys.S, keys.A, keys.D);
-        movePlayer(player4, keys.Y, keys.H, keys.G, keys.J);
+        movePlayer(player1,cursors.up, cursors.down, cursors.left, cursors.right, runnerSpeed);
+        movePlayer(player2, keys.NUMPAD_FIVE, keys.NUMPAD_TWO, keys.NUMPAD_ONE, keys.NUMPAD_THREE, gunnerSpeed);
+        movePlayer(player3, keys.W, keys.S, keys.A, keys.D, runnerSpeed);
+        movePlayer(player4, keys.Y, keys.H, keys.G, keys.J, gunnerSpeed);
     }
 
-    function movePlayer(player, up, down, left, right)
+    function movePlayer(player, up, down, left, right, velocity)
     {
         if (left.isDown)
         {
-            player.setVelocityX(-160);
+            player.setVelocityX(-velocity);
 
         }
         else if (right.isDown)
         {
-            player.setVelocityX(160);
+            player.setVelocityX(velocity);
 
         }
         else if (up.isDown)
         {
-            player.setVelocityY(-160);
+            player.setVelocityY(-velocity);
 
         }
         else if (down.isDown)
         {
-            player.setVelocityY(160);
+            player.setVelocityY(velocity);
         }
         else
         {
@@ -174,6 +274,7 @@
             player.setVelocityY(0);
         }
     }
+
     function collectFlag (player, flag)
     {
         //flag.disableBody(true, true);
@@ -182,6 +283,7 @@
         //  Add and update the score
          //redScoreText.setText('Score: ' + score);
     }
+
     function flagToBlueBaseCollide ()
     {
         //flag.disableBody(true, true);
@@ -191,6 +293,7 @@
         blueScore += 1;
         blueScoreText.setText('Blue Score: ' + blueScore);
     }
+
     function flagToRedBaseCollide ()
     {
         //flag.disableBody(true, true);

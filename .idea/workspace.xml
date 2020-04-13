@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a736d210-f4ac-4ad4-8725-055a6dc57501" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/blueGunner.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/bullet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/redGunner.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/target.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/topdown_combatMechanics.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/blueBase.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/blueBase.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/notPlayer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/player.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/redBase.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/redBase.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/bluePlayer.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/blueRunner.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/redPlayer.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/redRunner.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/game.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,6 +71,8 @@
       <workItem from="1586698834355" duration="6252000" />
       <workItem from="1586707083490" duration="104000" />
       <workItem from="1586707633721" duration="128000" />
+      <workItem from="1586795420301" duration="8533000" />
+      <workItem from="1586805625512" duration="260000" />
     </task>
     <servers />
   </component>
@@ -75,11 +80,11 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="732" y="227" key="FileChooserDialogImpl" timestamp="1586707328490">
+    <state x="732" y="227" key="FileChooserDialogImpl" timestamp="1586799422226">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="549" y="168" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1585838954168" />
-    <state x="732" y="227" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1586707328490" />
+    <state x="732" y="227" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1586799422226" />
     <state x="429" y="247" key="run.anything.popup" timestamp="1586625528901">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
