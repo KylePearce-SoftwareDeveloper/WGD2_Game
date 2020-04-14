@@ -53,6 +53,7 @@
     var redTeamBase;
     var timerText;
     var timedEvent;
+    var moveBases;
     var initialTime;
     var runnerSpeed = 180;
     var gunnerSpeed = 140;
@@ -123,6 +124,7 @@
         this.load.image('blueBase', 'assets/blueBase1.png');
         this.load.image('bullet', 'assets/bullet.png');
         this.load.image('target', 'assets/target.png');
+
         //RANDOM BARRIER LOCATION LOGIC
         this.load.image('vertBarrier', 'assets/vertBarrier.png',);
         this.load.image('horzBarrier', 'assets/horzBarrier.png',);
@@ -140,6 +142,7 @@
         initialTime = 301;
         // Each 1000 ms call onEvent
         timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
+        moveBases = this.time.addEvent({ delay: 5000, callback: moveBase, callbackScope: this, loop: true });
 
         //RANDOM BARRIER LOCATION LOGIC
         barriers = this.physics.add.staticGroup();
@@ -272,6 +275,7 @@
             var y5 = Phaser.Math.Between(0, 600);
             var x6 = Phaser.Math.Between(0, 800);
             var y6 = Phaser.Math.Between(0, 600);
+
             //CREATE NEW BARRIERS WITH RANDOM POSITIONS
             barriers.create(x1, y1, 'vertBarrier');
             barriers.create(x2, y2, 'vertBarrier');
@@ -309,6 +313,35 @@
         {
             player.setVelocityX(0);
             player.setVelocityY(0);
+        }
+    }
+
+    function moveBase()
+    {
+        var X0 = 45; var Y0 = 87;
+        var X1 = 760; var Y1 = 87;
+        var X2 = 760; var Y2 = 560;
+        var X3 = 45; var Y3 = 560;
+
+        if (blueTeamBase.x = X0)
+        {
+            blueTeamBase.x = X1; blueTeamBase.y = Y1;
+            redTeamBase.x = X3; redTeamBase.y = Y3;
+        }
+        else if (blueTeamBase.x = X1)
+        {
+            blueTeamBase.x = X2; blueTeamBase.y = Y2;
+            redTeamBase.x = X0; redTeamBase.y = Y0;
+        }
+        else if (blueTeamBase.x = X2)
+        {
+            blueTeamBase.x = X3; blueTeamBase.y = Y3;
+            redTeamBase.x = X1; redTeamBase.y = Y1;
+        }
+        else if (blueTeamBase.x = X3)
+        {
+            blueTeamBase.x = X0; blueTeamBase.y = Y0;
+            redTeamBase.x = X2; redTeamBase.y = Y2;
         }
     }
 
