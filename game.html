@@ -317,21 +317,22 @@
         if (left.isDown)
         {
             player.setVelocityX(-velocity);
-
+            player.angle = 180;
         }
         else if (right.isDown)
         {
             player.setVelocityX(velocity);
-
+            player.angle = 0;
         }
         else if (up.isDown)
         {
             player.setVelocityY(-velocity);
-
+            player.angle = 270;
         }
         else if (down.isDown)
         {
             player.setVelocityY(velocity);
+            player.angle = 90;
         }
         else
         {
@@ -352,17 +353,17 @@
             blueTeamBase.x = X1; blueTeamBase.y = Y1;
             redTeamBase.x = X3; redTeamBase.y = Y3;
         }
-        else if (blueTeamBase.x = X1 && moveBases === 200)
+        if (blueTeamBase.x = X1 && moveBases === 200)
         {
             blueTeamBase.x = X2; blueTeamBase.y = Y2;
             redTeamBase.x = X0; redTeamBase.y = Y0;
         }
-        else if (blueTeamBase.x = X2 && moveBases === 150)
+        if (blueTeamBase.x = X2 && moveBases === 150)
         {
             blueTeamBase.x = X3; blueTeamBase.y = Y3;
             redTeamBase.x = X1; redTeamBase.y = Y1;
         }
-        else if (blueTeamBase.x = X3 && moveBases === 100)
+        if (blueTeamBase.x = X3 && moveBases === 100)
         {
             blueTeamBase.x = X0; blueTeamBase.y = Y0;
             redTeamBase.x = X2; redTeamBase.y = Y2;
