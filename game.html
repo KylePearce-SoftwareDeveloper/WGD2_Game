@@ -61,7 +61,8 @@
     var redWinText;
     var drawText;
 
-    var playerBullets;
+    var redGunnerBullets;
+    var blueGunnerBullets;
     var reticle;
 
     var Bullet = new Phaser.Class({
@@ -139,7 +140,7 @@
         //  A simple background for our game
         this.add.image(400, 300, 'background');
 
-        playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+        blueGunnerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
 
         //set timer to 5 minutes
         initialTime = 301;
@@ -188,7 +189,7 @@
                 NUMPAD_TWO:Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO,
                 NUMPAD_ONE:Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE,
                 NUMPAD_THREE:Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE,
-
+                SPACE:Phaser.Input.Keyboard.KeyCodes.SPACE
             });
 
         //  The scores
@@ -220,16 +221,17 @@
 
         // Fires bullet from player on left click of mouse
         this.input.on('pointerdown', function (pointer, time, lastFired) {
-            if (player1.active === false)
+            if (player2.active === false)
                 return;
 
             // Get bullet from bullets group
-            var bullet = playerBullets.get().setActive(true).setVisible(true);
+            var bullet = blueGunnerBullets.get().setActive(true).setVisible(true);
 
             if (bullet)
             {
-                bullet.fire(player1, reticle);
-                this.physics.add.collider(enemy, bullet, enemyHitCallback);
+                bullet.fire(player2, reticle);
+                this.physics.add.collider(player3, bullet, enemyHitCallback);
+                this.physics.add.collider(player4, bullet, enemyHitCallback);
             }
         }, this);
 
@@ -309,6 +311,21 @@
             barriers.create(x6, y6, 'cubeBarrier');
             //RESET TIMMER
             barrierTimmer = 0;
+        }
+
+        if(keys.SPACE.isDown)
+        {
+            if (player2.active === false)
+                return;
+
+            // Get bullet from bullets group
+            var bullet = blueGunnerBullets.get().setActive(true).setVisible(true);
+
+            if (bullet)
+            {
+                bullet.fire(player2, reticle);
+                this.physics.add.collider(enemy, bullet, enemyHitCallback);
+            }
         }
     }
 
@@ -419,6 +436,19 @@
             gameOver = true;
             initialTime.stop();
 
+        }
+    }
+
+    function enemyHitCallback(enemyHit, bulletHit)
+    {
+        // Reduce health of enemy
+        if (bulletHit.active === true && enemyHit.active === true)
+        {
+            //enemyHit.health = enemyHit.health - 1;
+            console.log("HIT");
+
+            // Destroy bullet
+            bulletHit.setActive(false).setVisible(false);
         }
     }
 
