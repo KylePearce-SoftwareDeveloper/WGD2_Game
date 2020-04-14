@@ -53,7 +53,7 @@
     var redTeamBase;
     var timerText;
     var timedEvent;
-    var moveBases;
+  //  var moveBases;
     var initialTime;
     var runnerSpeed = 180;
     var gunnerSpeed = 140;
@@ -145,7 +145,7 @@
         initialTime = 301;
         // Each 1000 ms call onEvent
         timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
-        moveBases = this.time.addEvent({ delay: 1000, callback: moveBase, callbackScope: this, loop: true });
+       // moveBases = this.time.addEvent({ delay: 1000, callback: moveBase, callbackScope: this, loop: true });
 
         //RANDOM BARRIER LOCATION LOGIC
         barriers = this.physics.add.staticGroup();
@@ -324,7 +324,7 @@
             player.setVelocityX(velocity);
             player.angle = 0;
         }
-        else if (up.isDown)
+        else if (up.isDown && player.y >= 62)
         {
             player.setVelocityY(-velocity);
             player.angle = 270;
@@ -341,7 +341,7 @@
         }
     }
 
-    function moveBase()
+   /* function moveBase()
     {
         var X0 = 45; var Y0 = 87;
         var X1 = 760; var Y1 = 87;
@@ -369,7 +369,7 @@
             redTeamBase.x = X2; redTeamBase.y = Y2;
         }
     }
-
+*/
     function collectFlag (player, flag)
     {
         //flag.disableBody(true, true);
