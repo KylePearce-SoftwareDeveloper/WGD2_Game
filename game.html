@@ -60,6 +60,7 @@
     var blueWinText;
     var redWinText;
     var drawText;
+    var flagFound = false;
 
     var redGunnerBullets;
     var blueGunnerBullets;
@@ -230,8 +231,10 @@
             if (bullet)
             {
                 bullet.fire(player2, reticle);
-                this.physics.add.collider(player3, bullet, enemyHitCallback);
-                this.physics.add.collider(player4, bullet, enemyHitCallback);
+                this.physics.add.collider(player1, bullet, playerOneHit);
+               // this.physics.add.collider(player2, bullet, playerTwoHit);
+                this.physics.add.collider(player3, bullet, playerThreeHit);
+                this.physics.add.collider(player4, bullet, playerFourHit);
             }
         }, this);
 
@@ -389,18 +392,14 @@
 */
     function collectFlag (player, flag)
     {
-        //flag.disableBody(true, true);
        flag.x = player.x;
        flag.y = player.y;
-        //  Add and update the score
-         //redScoreText.setText('Score: ' + score);
+        flagFound = true;
     }
 
     function flagToBlueBaseCollide ()
     {
-        //flag.disableBody(true, true);
-        flag.x = 400;
-        flag.y = 300;
+        resetFlag();
         //  Add and update the score
         blueScore += 1;
         blueScoreText.setText('Blue Score: ' + blueScore);
@@ -408,9 +407,7 @@
 
     function flagToRedBaseCollide ()
     {
-        //flag.disableBody(true, true);
-        flag.x = 400;
-        flag.y = 300;
+        resetFlag();
         //  Add and update the score
         redScore += 1;
         redScoreText.setText('Red Score: ' + redScore);
@@ -439,7 +436,7 @@
         }
     }
 
-    function enemyHitCallback(enemyHit, bulletHit)
+    function playerOneHit(enemyHit, bulletHit)
     {
         // Reduce health of enemy
         if (bulletHit.active === true && enemyHit.active === true)
@@ -449,8 +446,67 @@
 
             // Destroy bullet
             bulletHit.setActive(false).setVisible(false);
+            enemyHit.x = 745;
+            enemyHit.y = 490;
+
+            if(flagFound)
+            {
+                resetFlag();
+            }
         }
     }
+    function playerTwoHit(enemyHit, bulletHit) {
+        // Reduce health of enemy
+        if (bulletHit.active === true && enemyHit.active === true) {
+            //enemyHit.health = enemyHit.health - 1;
+            console.log("HIT");
+
+            // Destroy bullet
+            bulletHit.setActive(false).setVisible(false);
+            enemyHit.x = 690;
+            enemyHit.y = 550;
+        }
+    }
+    function playerThreeHit(enemyHit, bulletHit)
+    {
+        // Reduce health of enemy
+        if (bulletHit.active === true && enemyHit.active === true)
+        {
+            //enemyHit.health = enemyHit.health - 1;
+            console.log("HIT");
+
+            // Destroy bullet
+            bulletHit.setActive(false).setVisible(false);
+            enemyHit.x = 115;
+            enemyHit.y = 95;
+
+            if(flagFound)
+            {
+                resetFlag();
+            }
+        }
+    }
+    function playerFourHit(enemyHit, bulletHit)
+    {
+        // Reduce health of enemy
+        if (bulletHit.active === true && enemyHit.active === true)
+        {
+            //enemyHit.health = enemyHit.health - 1;
+            console.log("HIT");
+
+            // Destroy bullet
+            bulletHit.setActive(false).setVisible(false);
+            enemyHit.x = 60;
+            enemyHit.y = 155;
+        }
+    }
+
+    function resetFlag ()
+    {
+        flag.x = 400;
+        flag.y = 300;
+    }
+
 
    // gameOver = true;
 
