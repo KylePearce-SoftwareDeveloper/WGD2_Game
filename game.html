@@ -131,9 +131,11 @@
         this.load.image('target', 'assets/target.png');
 
         //RANDOM BARRIER LOCATION LOGIC
-        this.load.image('vertBarrier', 'assets/vertBarrier.png',);
-        this.load.image('horzBarrier', 'assets/horzBarrier.png',);
-        this.load.image('cubeBarrier', 'assets/cubeBarrier.png',);
+        this.load.image('vertBarrier', 'assets/verticalBarrier.png',);
+        this.load.image('horzBarrier', 'assets/horizontalBarrier.png',);
+        this.load.image('cubeBarrier', 'assets/cuboidBarrier.png',);
+        this.load.image('horzBarrierVariation', 'assets/horizontalBarrierVariation.png',);
+        this.load.image('vertBarrierVariation', 'assets/verticalBarrierVariation.png',);
     }
 
     function create ()
@@ -158,6 +160,10 @@
         barriers.create(600, 300, 'vertBarrier');
         barriers.create(250, 350, 'cubeBarrier');
         barriers.create(470, 270, 'cubeBarrier');
+        barriers.create(300, 200, 'horzBarrierVariation');
+        barriers.create(600, 300, 'vertBarrierVariation');
+        barriers.create(250, 350, 'horzBarrierVariation');
+        barriers.create(470, 270, 'vertBarrierVariation');
 
          // creating objects
         blueTeamBase = this.physics.add.sprite(760, 560, 'blueBase');
@@ -292,26 +298,41 @@
             //DELETE CURRENT BARRIERS
             barriers.clear(true);
             //CREATE NEW RANDOM POSITIONS FOR BARRIERS
-            var x1 = Phaser.Math.Between(0, 800);
-            var y1 = Phaser.Math.Between(0, 600);
-            var x2 = Phaser.Math.Between(0, 800);
-            var y2 = Phaser.Math.Between(0, 600);
-            var x3 = Phaser.Math.Between(0, 800);
-            var y3 = Phaser.Math.Between(0, 600);
-            var x4 = Phaser.Math.Between(0, 800);
-            var y4 = Phaser.Math.Between(0, 600);
-            var x5 = Phaser.Math.Between(0, 800);
-            var y5 = Phaser.Math.Between(0, 600);
-            var x6 = Phaser.Math.Between(0, 800);
-            var y6 = Phaser.Math.Between(0, 600);
-
+            //first half of window
+            var x1 = Phaser.Math.Between(136, 350);//vert
+            var y1 = Phaser.Math.Between(216, 500);
+            var x2 = Phaser.Math.Between(186, 300);//horz
+            var y2 = Phaser.Math.Between(166, 550);
+            var x3 = Phaser.Math.Between(136, 350);//cubeoid
+            var y3 = Phaser.Math.Between(166, 550);
+            var x4 = Phaser.Math.Between(111, 375);//vertVariation
+            var y4 = Phaser.Math.Between(316, 400);
+            var x5 = Phaser.Math.Between(286, 200);//horzVariation
+            var y5 = Phaser.Math.Between(141, 575);
+            //second half of window
+            var x6 = Phaser.Math.Between(450, 669);//vert
+            var y6 = Phaser.Math.Between(100, 421);
+            var x7 = Phaser.Math.Between(500, 619);//horz
+            var y7 = Phaser.Math.Between(50, 471);
+            var x8 = Phaser.Math.Between(450, 669);//cuboid
+            var y8 = Phaser.Math.Between(50, 471);
+            var x9 = Phaser.Math.Between(425, 694);//vertVariation
+            var y9 = Phaser.Math.Between(200, 321);
+            var x10 = Phaser.Math.Between(600, 519);//horzVariation
+            var y10 = Phaser.Math.Between(25, 496);
             //CREATE NEW BARRIERS WITH RANDOM POSITIONS
+            //first half of window
             barriers.create(x1, y1, 'vertBarrier');
-            barriers.create(x2, y2, 'vertBarrier');
-            barriers.create(x3, y3, 'horzBarrier');
-            barriers.create(x4, y4, 'horzBarrier');
-            barriers.create(x5, y5, 'cubeBarrier');
-            barriers.create(x6, y6, 'cubeBarrier');
+            barriers.create(x2, y2, 'horzBarrier');
+            barriers.create(x3, y3, 'cubeBarrier');
+            barriers.create(x4, y4, 'vertBarrierVariation');
+            barriers.create(x5, y5, 'horzBarrierVariation');
+            //second half of window
+            barriers.create(x6, y6, 'vertBarrier');
+            barriers.create(x7, y7, 'horzBarrier');
+            barriers.create(x8, y8, 'cubeBarrier');
+            barriers.create(x9, y9, 'vertBarrierVariation');
+            barriers.create(x10, y10, 'horzBarrierVariation');
             //RESET TIMMER
             barrierTimmer = 0;
         }
