@@ -57,6 +57,9 @@
     var initialTime;
     var runnerSpeed = 180;
     var gunnerSpeed = 140;
+    var blueWinText;
+    var redWinText;
+    var drawText;
 
     var playerBullets;
     var reticle;
@@ -142,7 +145,7 @@
         initialTime = 301;
         // Each 1000 ms call onEvent
         timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
-        moveBases = this.time.addEvent({ delay: 5000, callback: moveBase, callbackScope: this, loop: true });
+        moveBases = this.time.addEvent({ delay: 1000, callback: moveBase, callbackScope: this, loop: true });
 
         //RANDOM BARRIER LOCATION LOGIC
         barriers = this.physics.add.staticGroup();
@@ -192,6 +195,12 @@
         redScoreText = this.add.text(70, 16, 'Red Score: ' + redScore, { fontSize: '32px', fill: '#000' });
         blueScoreText = this.add.text(470, 16, 'Blue Score: ' + blueScore, { fontSize: '32px', fill: '#000' });
         timerText = this.add.text(372, 16, '', { fontSize: '32px', fill: 'black' });
+        blueWinText = this.add.text(320, 200, 'BLUE WINS', { fontSize: '32px', fill: 'blue'});
+        blueWinText.visible = false;
+        redWinText = this.add.text(320, 200, 'RED WINS', { fontSize: '32px', fill: 'red'});
+        redWinText.visible = false;
+        drawText = this.add.text(320, 200, 'ITS A DRAW', { fontSize: '32px', fill: 'black'});
+        drawText.visible = false;
 
         //  Collide the player and the flag with the platforms
         this.physics.add.collider(player1, barriers);
@@ -248,10 +257,25 @@
 
     function update ()
     {
-        if (gameOver)
+        if (initialTime <=  0)
         {
-            return;
+            gameOver = true;
+            initialTime +=1;
+
+            if (gameOver === true) {
+                if(blueScore > redScore){
+                    blueWinText.visible = true;
+                 }
+                if(redScore > blueScore){
+                    redWinText.visible = true;
+
+                }
+                if(redScore=== blueScore){
+                    drawText.visible = true;
+                 }
+            }
         }
+
         movePlayer(player1,cursors.up, cursors.down, cursors.left, cursors.right, runnerSpeed);
         movePlayer(player2, keys.NUMPAD_FIVE, keys.NUMPAD_TWO, keys.NUMPAD_ONE, keys.NUMPAD_THREE, gunnerSpeed);
         movePlayer(player3, keys.W, keys.S, keys.A, keys.D, runnerSpeed);
@@ -259,7 +283,7 @@
 
         //RANDOM BARRIER LOCATION LOGIC
         barrierTimmer ++;
-        if(barrierTimmer > 2040) {
+        if(barrierTimmer > 2000) {
             //DELETE CURRENT BARRIERS
             barriers.clear(true);
             //CREATE NEW RANDOM POSITIONS FOR BARRIERS
@@ -323,22 +347,22 @@
         var X2 = 760; var Y2 = 560;
         var X3 = 45; var Y3 = 560;
 
-        if (blueTeamBase.x = X0)
+        if (blueTeamBase.x = X0 && moveBases >= 250)
         {
             blueTeamBase.x = X1; blueTeamBase.y = Y1;
             redTeamBase.x = X3; redTeamBase.y = Y3;
         }
-        else if (blueTeamBase.x = X1)
+        else if (blueTeamBase.x = X1 && moveBases === 200)
         {
             blueTeamBase.x = X2; blueTeamBase.y = Y2;
             redTeamBase.x = X0; redTeamBase.y = Y0;
         }
-        else if (blueTeamBase.x = X2)
+        else if (blueTeamBase.x = X2 && moveBases === 150)
         {
             blueTeamBase.x = X3; blueTeamBase.y = Y3;
             redTeamBase.x = X1; redTeamBase.y = Y1;
         }
-        else if (blueTeamBase.x = X3)
+        else if (blueTeamBase.x = X3 && moveBases === 100)
         {
             blueTeamBase.x = X0; blueTeamBase.y = Y0;
             redTeamBase.x = X2; redTeamBase.y = Y2;
