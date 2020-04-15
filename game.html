@@ -68,6 +68,8 @@
 
     var barrierEvent;
 
+    var hasSpaceBeenPressed = false;
+
     var Bullet = new Phaser.Class({
         Extends: Phaser.GameObjects.Image,
         initialize:
@@ -146,6 +148,7 @@
         this.add.image(400, 300, 'background');
 
         blueGunnerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+        redGunnerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
 
         //set timer to 5 minutes
         initialTime = 300;
@@ -240,8 +243,6 @@
             if (bullet)
             {
                 bullet.fire(player2, reticle);
-                this.physics.add.collider(player1, bullet, playerOneHit);
-               // this.physics.add.collider(player2, bullet, playerTwoHit);
                 this.physics.add.collider(player3, bullet, playerThreeHit);
                 this.physics.add.collider(player4, bullet, playerFourHit);
             }
@@ -295,19 +296,27 @@
         movePlayer(player3, keys.W, keys.S, keys.A, keys.D, runnerSpeed);
         movePlayer(player4, keys.Y, keys.H, keys.G, keys.J, gunnerSpeed);
 
-        if(keys.SPACE.isDown)
+        if(!hasSpaceBeenPressed)
         {
-            if (player2.active === false)
-                return;
+            if (keys.SPACE.isDown) {
+                if (player4.active === false)
+                    return;
 
-            // Get bullet from bullets group
-            var bullet = blueGunnerBullets.get().setActive(true).setVisible(true);
+                // Get bullet from bullets group
+                var bullet = redGunnerBullets.get().setActive(true).setVisible(true);
 
-            if (bullet)
-            {
-                bullet.fire(player2, reticle);
-                this.physics.add.collider(enemy, bullet, enemyHitCallback);
+                if (bullet) {
+                    bullet.fire(player4, reticle);
+                    this.physics.add.collider(player1, bullet, playerOneHit);
+                    this.physics.add.collider(player2, bullet, playerTwoHit);
+                }
+
+                hasSpaceBeenPressed = true;
             }
+        }
+        if(keys.SPACE.isUp)
+        {
+            hasSpaceBeenPressed = false;
         }
     }
 
