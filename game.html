@@ -301,7 +301,7 @@
                 var bullet = blueGunnerBullets.get().setActive(true).setVisible(true);
 
                 if (bullet) {
-                    bullet.fire(player2, player2.angle());
+                    bullet.fire(player2, reticle);
                     this.physics.add.collider(player3, bullet, playerOneHit);
                     this.physics.add.collider(player4, bullet, playerTwoHit);
                 }
