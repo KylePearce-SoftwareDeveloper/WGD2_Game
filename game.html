@@ -82,35 +82,45 @@
                 Phaser.GameObjects.Image.call(this, scene, 0, 0, 'bullet');
                 this.speed = 1;
                 this.born = 0;
-                this.direction = 0;
+                this.directionX = 0;
+                this.directionY = 0;
                 this.xSpeed = 0;
                 this.ySpeed = 0;
                 this.setSize(12, 12, true);
             },
 
         // Fires a bullet from the player to the reticle
-        fire: function (shooter, angle)
+        fire: function (shooter)
         {
             this.setPosition(shooter.x, shooter.y); // Initial position
 
-            //if(angle === 0)
-             //   this.setVelocityX(200);
-
-            this.direction = Math.atan( (angle.x-this.x) / (angle.y-this.y));
-
-            // Calculate X and y velocity of bullet to moves it from shooter to target
-            if (angle.y >= this.y)
+            if(shooter.angle === 0)
             {
-                this.xSpeed = this.speed*Math.sin(this.direction);
-                this.ySpeed = this.speed*Math.cos(this.direction);
-            }
-            else
-            {
-                this.xSpeed = -this.speed*Math.sin(this.direction);
-                this.ySpeed = -this.speed*Math.cos(this.direction);
+                this.directionX = 1;
+                this.directionY = 0;
             }
 
-            //this.rotation = shooter.rotation; // angle bullet with shooters rotation
+             if(shooter.angle === 90)
+             {
+                 this.directionY = 1;
+                 this.directionX = 0;
+             }
+
+             if(shooter.angle === 180)
+             {
+                 this.directionX = -1;
+                 this.directionY = 0;
+             }
+
+             if(shooter.angle === 270)
+             {
+                 this.directionY = -1;
+                 this.directionX = 0;
+             }
+
+            this.xSpeed = this.speed*this.directionX;
+            this.ySpeed = this.speed*this.directionY;
+
             this.born = 0; // Time since new bullet spawned
         },
 
@@ -278,7 +288,7 @@
                 var bullet = redGunnerBullets.get().setActive(true).setVisible(true);
 
                 if (bullet) {
-                    bullet.fire(player4, reticle);
+                    bullet.fire(player4);
                     this.physics.add.collider(player1, bullet, playerOneHit);
                     this.physics.add.collider(player2, bullet, playerTwoHit);
                 }
@@ -301,11 +311,10 @@
                 var bullet = blueGunnerBullets.get().setActive(true).setVisible(true);
 
                 if (bullet) {
-                    bullet.fire(player2, reticle);
+                    bullet.fire(player2);
                     this.physics.add.collider(player3, bullet, playerOneHit);
                     this.physics.add.collider(player4, bullet, playerTwoHit);
                 }
-
                 hasZeroBeenPressed = true;
             }
         }
