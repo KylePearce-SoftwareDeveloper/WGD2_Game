@@ -125,27 +125,31 @@
         fire: function (shooter)
         {
             this.setPosition(shooter.x, shooter.y); // Initial position
-
-            if(shooter.angle === 0)
+            console.log(shooter.angle);
+            if(shooter.angle == 0)
             {
+                console.log("angle 0");
                 this.directionX = 1;
                 this.directionY = 0;
             }
 
-             if(shooter.angle === 90)
+             if(shooter.angle == 90)
              {
+                 console.log("angle 90");
                  this.directionY = 1;
                  this.directionX = 0;
              }
 
-             if(shooter.angle === 180)
+             if(shooter.angle == -180)
              {
+                 console.log("angle 180");
                  this.directionX = -1;
                  this.directionY = 0;
              }
 
-             if(shooter.angle === 270)
+             if(shooter.angle == -90)
              {
+                 console.log("angle 270");
                  this.directionY = -1;
                  this.directionX = 0;
              }
