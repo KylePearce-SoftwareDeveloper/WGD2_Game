@@ -64,7 +64,6 @@
 
     var redGunnerBullets;
     var blueGunnerBullets;
-    var reticle;
 
     var barrierEvent;
     var redGunnerDirection = 0;
@@ -182,10 +181,9 @@
         this.load.image('blueRunner', 'assets/blueRunner.png');
         this.load.image('redGunner', 'assets/redGunner.png');
         this.load.image('redRunner', 'assets/redRunner.png');
-        this.load.image('redBase', 'assets/redBase2.png');
-        this.load.image('blueBase', 'assets/blueBase1.png');
+        this.load.image('redBase', 'assets/redBase.png');
+        this.load.image('blueBase', 'assets/blueBase.png');
         this.load.image('bullet', 'assets/bullet.png');
-        this.load.image('target', 'assets/target.png');
 
         //RANDOM BARRIER LOCATION LOGIC
         this.load.image('vertBarrier', 'assets/verticalBarrier.png');
@@ -195,7 +193,7 @@
         this.load.image('vertBarrierVariation', 'assets/verticalBarrierVariation.png');
 
         //AUDIO
-        this.load.audio('backgroundMusic', 'assets/breakout.mp3');
+        this.load.audio('backgroundMusic', 'assets/background.mp3');
         this.load.audio('flagScoreMusic', 'assets/powerup.wav');
         this.load.audio('gunShotMusic', 'assets/fire.ogg');
     }
@@ -230,20 +228,17 @@
         barriers.create(470, 270, 'vertBarrierVariation');
 
          // creating objects
-        blueTeamBase = this.physics.add.sprite(760, 560, 'blueBase');
-        redTeamBase = this.physics.add.sprite(45, 87, 'redBase');
+        blueTeamBase = this.physics.add.sprite(750, 550, 'blueBase');
+        redTeamBase = this.physics.add.sprite(45, 90, 'redBase');
         player1 = this.physics.add.sprite(745, 490, 'blueRunner');
         player1.body.setAllowGravity(false).setCollideWorldBounds(true);
-        player2 = this.physics.add.sprite(690, 550, 'blueGunner');
+        player2 = this.physics.add.sprite(680, 550, 'blueGunner');
         player2.body.setAllowGravity(false).setCollideWorldBounds(true);
         player3 = this.physics.add.sprite(115, 95, 'redRunner');
         player3.body.setAllowGravity(false).setCollideWorldBounds(true);
         player4 = this.physics.add.sprite(60, 155, 'redGunner');
         player4.body.setAllowGravity(false).setCollideWorldBounds(true);
         flag = this.physics.add.sprite(400, 300, 'flag');
-
-        reticle = this.physics.add.sprite(800, 700, 'target');
-        reticle.setOrigin(0.5, 0.5).setDisplaySize(15, 15).setCollideWorldBounds(true);
 
         //  Input Events
         cursors = this.input.keyboard.createCursorKeys();
@@ -267,7 +262,7 @@
         //  The scores
         redScoreText = this.add.text(20, 12, 'Red Score: ' + redScore, { fontSize: '32px', fill: '#000' });
         blueScoreText = this.add.text(530, 12, 'Blue Score: ' + blueScore, { fontSize: '32px', fill: '#000' });
-        timerText = this.add.text(360, 12, '', { fontSize: '32px', fill: 'black' });
+        timerText = this.add.text(360, 12, '', { fontSize: '32px', fill: '#000' });
         blueWinText = this.add.text(320, 200, 'BLUE WINS', { fontSize: '32px', fill: 'blue'});
         blueWinText.visible = false;
         redWinText = this.add.text(320, 200, 'RED WINS', { fontSize: '32px', fill: 'red'});
