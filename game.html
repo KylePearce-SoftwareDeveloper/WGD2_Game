@@ -67,6 +67,8 @@
     var reticle;
 
     var barrierEvent;
+    var redGunnerDirection = 0;
+    var blueGunnerDirection = 0;
 
     var hasSpaceBeenPressed = false;
     var hasZeroBeenPressed = false;
@@ -87,13 +89,17 @@
             },
 
         // Fires a bullet from the player to the reticle
-        fire: function (shooter, target)
+        fire: function (shooter, angle)
         {
             this.setPosition(shooter.x, shooter.y); // Initial position
-            this.direction = Math.atan( (target.x-this.x) / (target.y-this.y));
+
+            //if(angle === 0)
+             //   this.setVelocityX(200);
+
+            this.direction = Math.atan( (angle.x-this.x) / (angle.y-this.y));
 
             // Calculate X and y velocity of bullet to moves it from shooter to target
-            if (target.y >= this.y)
+            if (angle.y >= this.y)
             {
                 this.xSpeed = this.speed*Math.sin(this.direction);
                 this.ySpeed = this.speed*Math.cos(this.direction);
@@ -104,7 +110,7 @@
                 this.ySpeed = -this.speed*Math.cos(this.direction);
             }
 
-            this.rotation = shooter.rotation; // angle bullet with shooters rotation
+            //this.rotation = shooter.rotation; // angle bullet with shooters rotation
             this.born = 0; // Time since new bullet spawned
         },
 
@@ -233,23 +239,6 @@
 
         this.physics.add.overlap(flag, blueTeamBase, flagToBlueBaseCollide, null, this);
         this.physics.add.overlap(flag, redTeamBase, flagToRedBaseCollide, null, this);
-
-        // Fires bullet from player on left click of mouse
-        this.input.on('pointerdown', function (pointer, time, lastFired) {
-            if (player2.active === false)
-                return;
-
-            // Get bullet from bullets group
-            var bullet = blueGunnerBullets.get().setActive(true).setVisible(true);
-
-            if (bullet)
-            {
-                bullet.fire(player2, reticle);
-                this.physics.add.collider(player3, bullet, playerThreeHit);
-                this.physics.add.collider(player4, bullet, playerFourHit);
-            }
-        }, this);
-
     }
 
 
@@ -312,7 +301,7 @@
                 var bullet = blueGunnerBullets.get().setActive(true).setVisible(true);
 
                 if (bullet) {
-                    bullet.fire(player2, reticle);
+                    bullet.fire(player2, player2.angle());
                     this.physics.add.collider(player3, bullet, playerOneHit);
                     this.physics.add.collider(player4, bullet, playerTwoHit);
                 }
