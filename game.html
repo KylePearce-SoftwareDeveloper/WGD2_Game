@@ -73,6 +73,38 @@
     var hasSpaceBeenPressed = false;
     var hasZeroBeenPressed = false;
 
+    //AUDIO
+    var backgroundMusic;
+    var backgroundMusicConfig = {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: true,
+        delay: 0
+    }
+    var flagScoreMusic;
+    var flagScoreMusicConfig = {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+    }
+    var gunShotMusic;
+    var gunShotMusicConfig = {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+    }
+
     var Bullet = new Phaser.Class({
         Extends: Phaser.GameObjects.Image,
         initialize:
@@ -157,6 +189,11 @@
         this.load.image('cubeBarrier', 'assets/cuboidBarrier.png');
         this.load.image('horzBarrierVariation', 'assets/horizontalBarrierVariation.png');
         this.load.image('vertBarrierVariation', 'assets/verticalBarrierVariation.png');
+
+        //AUDIO
+        this.load.audio('backgroundMusic', 'assets/breakout.mp3');
+        this.load.audio('flagScoreMusic', 'assets/powerup.wav');
+        this.load.audio('gunShotMusic', 'assets/fire.ogg');
     }
 
     function create ()
@@ -249,6 +286,12 @@
 
         this.physics.add.overlap(flag, blueTeamBase, flagToBlueBaseCollide, null, this);
         this.physics.add.overlap(flag, redTeamBase, flagToRedBaseCollide, null, this);
+
+        //AUDIO
+        this.backgroundMusic = this.sound.add('backgroundMusic')
+        this.flagScoreMusic = this.sound.add('flagScoreMusic')
+        this.gunShotMusic = this.sound.add('gunShotMusic')
+        this.backgroundMusic.play(backgroundMusicConfig);
     }
 
 
@@ -289,6 +332,7 @@
 
                 if (bullet) {
                     bullet.fire(player4);
+                    this.gunShotMusic.play(gunShotMusicConfig);
                     this.physics.add.collider(player1, bullet, playerOneHit);
                     this.physics.add.collider(player2, bullet, playerTwoHit);
                 }
@@ -312,6 +356,7 @@
 
                 if (bullet) {
                     bullet.fire(player2);
+                    this.gunShotMusic.play(gunShotMusicConfig);
                     this.physics.add.collider(player3, bullet, playerOneHit);
                     this.physics.add.collider(player4, bullet, playerTwoHit);
                 }
@@ -395,6 +440,7 @@
         //  Add and update the score
         blueScore += 1;
         blueScoreText.setText('Blue Score: ' + blueScore);
+        this.flagScoreMusic.play(flagScoreMusicConfig);//AUDIO
     }
 
     function flagToRedBaseCollide ()
@@ -403,6 +449,7 @@
         //  Add and update the score
         redScore += 1;
         redScoreText.setText('Red Score: ' + redScore);
+        this.flagScoreMusic.play(flagScoreMusicConfig);//AUDIO
     }
 
     function formatTime(seconds){
