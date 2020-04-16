@@ -16,7 +16,7 @@
 
     var config = {
         type: Phaser.AUTO,
-        width: 800,
+        width: 805,
         height: 600,
         physics: {
             default: 'arcade',
@@ -124,31 +124,26 @@
         fire: function (shooter)
         {
             this.setPosition(shooter.x, shooter.y); // Initial position
-            console.log(shooter.angle);
             if(shooter.angle == 0)
             {
-                console.log("angle 0");
                 this.directionX = 1;
                 this.directionY = 0;
             }
 
              if(shooter.angle == 90)
              {
-                 console.log("angle 90");
                  this.directionY = 1;
                  this.directionX = 0;
              }
 
              if(shooter.angle == -180)
              {
-                 console.log("angle 180");
                  this.directionX = -1;
                  this.directionY = 0;
              }
 
              if(shooter.angle == -90)
              {
-                 console.log("angle 270");
                  this.directionY = -1;
                  this.directionX = 0;
              }
@@ -175,27 +170,27 @@
 
      function preload ()
     {
-        this.load.image('background', 'assets/background.png');
-        this.load.image('flag', 'assets/flag.png');
-        this.load.image('blueGunner', 'assets/blueGunner.png');
-        this.load.image('blueRunner', 'assets/blueRunner.png');
-        this.load.image('redGunner', 'assets/redGunner.png');
-        this.load.image('redRunner', 'assets/redRunner.png');
-        this.load.image('redBase', 'assets/redBase.png');
-        this.load.image('blueBase', 'assets/blueBase.png');
-        this.load.image('bullet', 'assets/bullet.png');
+        this.load.image('background', 'assets/texture/background.png');
+        this.load.image('flag', 'assets/texture/flag.png');
+        this.load.image('blueGunner', 'assets/texture/blueGunner.png');
+        this.load.image('blueRunner', 'assets/texture/blueRunner.png');
+        this.load.image('redGunner', 'assets/texture/redGunner.png');
+        this.load.image('redRunner', 'assets/texture/redRunner.png');
+        this.load.image('redBase', 'assets/texture/redBase.png');
+        this.load.image('blueBase', 'assets/texture/blueBase.png');
+        this.load.image('bullet', 'assets/texture/bullet.png');
 
         //RANDOM BARRIER LOCATION LOGIC
-        this.load.image('vertBarrier', 'assets/verticalBarrier.png');
-        this.load.image('horzBarrier', 'assets/horizontalBarrier.png');
-        this.load.image('cubeBarrier', 'assets/cuboidBarrier.png');
-        this.load.image('horzBarrierVariation', 'assets/horizontalBarrierVariation.png');
-        this.load.image('vertBarrierVariation', 'assets/verticalBarrierVariation.png');
+        this.load.image('vertBarrier', 'assets/texture/verticalBarrier.png');
+        this.load.image('horzBarrier', 'assets/texture/horizontalBarrier.png');
+        this.load.image('cubeBarrier', 'assets/texture/cuboidBarrier.png');
+        this.load.image('horzBarrierVariation', 'assets/texture/horizontalBarrierVariation.png');
+        this.load.image('vertBarrierVariation', 'assets/texture/verticalBarrierVariation.png');
 
         //AUDIO
-        this.load.audio('backgroundMusic', 'assets/background.mp3');
-        this.load.audio('flagScoreMusic', 'assets/powerup.wav');
-        this.load.audio('gunShotMusic', 'assets/fire.ogg');
+        this.load.audio('backgroundMusic', 'assets/audio/background.mp3');
+        this.load.audio('flagScoreMusic', 'assets/audio/powerup.wav');
+        this.load.audio('gunShotMusic', 'assets/audio/fire.ogg');
     }
 
     function create ()
@@ -229,11 +224,12 @@
 
          // creating objects
         blueTeamBase = this.physics.add.sprite(750, 550, 'blueBase');
-        redTeamBase = this.physics.add.sprite(45, 90, 'redBase');
+        redTeamBase = this.physics.add.sprite(47, 100, 'redBase');
         player1 = this.physics.add.sprite(745, 490, 'blueRunner');
         player1.body.setAllowGravity(false).setCollideWorldBounds(true);
         player2 = this.physics.add.sprite(680, 550, 'blueGunner');
         player2.body.setAllowGravity(false).setCollideWorldBounds(true);
+        player2.angle = 180;
         player3 = this.physics.add.sprite(115, 95, 'redRunner');
         player3.body.setAllowGravity(false).setCollideWorldBounds(true);
         player4 = this.physics.add.sprite(60, 155, 'redGunner');
@@ -275,9 +271,6 @@
         this.physics.add.collider(player2, barriers);
         this.physics.add.collider(player3, barriers);
         this.physics.add.collider(player4, barriers);
-
-
-
 
         //  Checks to see if the player overlaps with any of the collectible, if he does call the collectStar function
         this.physics.add.overlap(player1, flag, collectFlag, null, this);
@@ -479,9 +472,6 @@
         // Reduce health of enemy
         if (bulletHit.active === true && enemyHit.active === true)
         {
-            //enemyHit.health = enemyHit.health - 1;
-            console.log("HIT");
-
             // Destroy bullet
             bulletHit.setActive(false).setVisible(false);
             enemyHit.x = 745;
@@ -496,8 +486,6 @@
     function playerTwoHit(enemyHit, bulletHit) {
         // Reduce health of enemy
         if (bulletHit.active === true && enemyHit.active === true) {
-            //enemyHit.health = enemyHit.health - 1;
-            console.log("HIT");
 
             // Destroy bullet
             bulletHit.setActive(false).setVisible(false);
@@ -510,9 +498,6 @@
         // Reduce health of enemy
         if (bulletHit.active === true && enemyHit.active === true)
         {
-            //enemyHit.health = enemyHit.health - 1;
-            console.log("HIT");
-
             // Destroy bullet
             bulletHit.setActive(false).setVisible(false);
             enemyHit.x = 115;
@@ -529,9 +514,6 @@
         // Reduce health of enemy
         if (bulletHit.active === true && enemyHit.active === true)
         {
-            //enemyHit.health = enemyHit.health - 1;
-            console.log("HIT");
-
             // Destroy bullet
             bulletHit.setActive(false).setVisible(false);
             enemyHit.x = 60;

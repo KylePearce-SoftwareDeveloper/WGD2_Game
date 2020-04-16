@@ -2,6 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a736d210-f4ac-4ad4-8725-055a6dc57501" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/background.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/barriers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/blueBase.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/blueGunner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/blueRunner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/bullet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/cubeBarrier.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/cuboidBarrier.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/fire.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/flag.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/horizontalBarrier.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/horizontalBarrierVariation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/powerup.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/redBase.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/redGunner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/redRunner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/verticalBarrier.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/verticalBarrierVariation.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/game.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +98,9 @@
       <workItem from="1587051617526" duration="613000" />
       <workItem from="1587053855081" duration="1225000" />
       <workItem from="1587056196120" duration="1026000" />
-      <workItem from="1587057380012" duration="40000" />
+      <workItem from="1587057380012" duration="87000" />
+      <workItem from="1587061679722" duration="1086000" />
+      <workItem from="1587062778943" duration="1404000" />
     </task>
     <servers />
   </component>
@@ -91,6 +113,10 @@
     </state>
     <state x="549" y="168" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1585838954168" />
     <state x="732" y="227" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1586799422226" />
+    <state x="499" y="86" width="1050" height="940" key="find.popup" timestamp="1587063599063">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="499" y="86" width="1050" height="940" key="find.popup/0.0.2048.1112@0.0.2048.1112" timestamp="1587063599063" />
     <state x="429" y="247" key="run.anything.popup" timestamp="1586625528901">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
