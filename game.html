@@ -69,6 +69,7 @@
     var barrierEvent;
 
     var hasSpaceBeenPressed = false;
+    var hasZeroBeenPressed = false;
 
     var Bullet = new Phaser.Class({
         Extends: Phaser.GameObjects.Image,
@@ -202,6 +203,7 @@
                 NUMPAD_TWO:Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO,
                 NUMPAD_ONE:Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE,
                 NUMPAD_THREE:Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE,
+                NUMPAD_ZERO: Phaser.Input.Keyboard.KeyCodes.NUMPAD_ZERO,
                 SPACE:Phaser.Input.Keyboard.KeyCodes.SPACE
             });
 
@@ -248,25 +250,6 @@
             }
         }, this);
 
-        // Pointer lock will only work after mousedown
-        game.canvas.addEventListener('mousedown', function () {
-            game.input.mouse.requestPointerLock();
-        });
-
-        // Exit pointer lock when Q or escape (by default) is pressed.
-        this.input.keyboard.on('keydown_Q', function (event) {
-            if (game.input.mouse.locked)
-                game.input.mouse.releasePointerLock();
-        }, 0, this);
-
-        // Move reticle upon locked pointer move
-        this.input.on('pointermove', function (pointer) {
-            if (this.input.mouse.locked)
-            {
-                reticle.x += pointer.movementX;
-                reticle.y += pointer.movementY;
-            }
-        }, this);
     }
 
 
@@ -317,6 +300,29 @@
         if(keys.SPACE.isUp)
         {
             hasSpaceBeenPressed = false;
+        }
+
+        if(!hasZeroBeenPressed)
+        {
+            if (keys.NUMPAD_ZERO.isDown) {
+                if (player2.active === false)
+                    return;
+
+                // Get bullet from bullets group
+                var bullet = blueGunnerBullets.get().setActive(true).setVisible(true);
+
+                if (bullet) {
+                    bullet.fire(player2, reticle);
+                    this.physics.add.collider(player3, bullet, playerOneHit);
+                    this.physics.add.collider(player4, bullet, playerTwoHit);
+                }
+
+                hasZeroBeenPressed = true;
+            }
+        }
+        if(keys.NUMPAD_ZERO.isUp)
+        {
+            hasZeroBeenPressed = false;
         }
     }
 
