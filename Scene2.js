@@ -405,7 +405,7 @@ class Scene2 extends Phaser.Scene {
                 NUMPAD_TWO:Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO,
                 NUMPAD_ONE:Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE,
                 NUMPAD_THREE:Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE,
-                NUMPAD_ZERO: Phaser.Input.Keyboard.KeyCodes.ALT,
+                NUMPAD_ZERO: Phaser.Input.Keyboard.KeyCodes.NUMPAD_ZERO,
                 SPACE:Phaser.Input.Keyboard.KeyCodes.SPACE
             });
 
