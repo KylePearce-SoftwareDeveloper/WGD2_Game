@@ -8,12 +8,12 @@ class Scene1 extends Phaser.Scene {
     create() {
         this.add.text(250, 50, "Welcome to Runners & Gunners!");
         this.add.text(130, 100, "Click in the game window for your keyboard to gain focus");
-        this.add.text(200, 200, "Controls:");
-        this.add.text(250, 225, "Red Runner - WASD");
-        this.add.text(250, 250, "Red Gunner - YGHJ");
-        this.add.text(250, 275, "Red Runner - Arrow Keys");
-        this.add.text(250, 300, "Red Runner - 5123");
-        this.add.text(250, 400, "PRESS SPACE TO PLAY THE GAME!");
+        this.add.text(150, 200, "Controls:");
+        this.add.text(200, 225, "Red Runner - WASD");
+        this.add.text(200, 250, "Red Gunner - YGHJ, space key to fire");
+        this.add.text(200, 275, "Blue Runner - Arrow Keys");
+        this.add.text(200, 300, "Blue Gunner - 5123, 0 key to fire (turn off 'num lock')");
+        this.add.text(200, 400, "PRESS SPACE TO PLAY THE GAME!");
         //this.scene.start("playGame");
         keys = this.input.keyboard.addKeys({SPACE:Phaser.Input.Keyboard.KeyCodes.SPACE});
     }
