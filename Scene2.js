@@ -316,6 +316,12 @@ class Scene2 extends Phaser.Scene {
         super("playGame");
     }
 
+    /*create() {
+        this.add.text(20, 20, "Loading game...")
+        this.scene.start("playGame")
+    }*/
+
+
     preload ()
     {
         this.load.image('background', 'assets/texture/background.png');
@@ -391,14 +397,14 @@ class Scene2 extends Phaser.Scene {
                 S:Phaser.Input.Keyboard.KeyCodes.S,
                 A:Phaser.Input.Keyboard.KeyCodes.A,
                 D:Phaser.Input.Keyboard.KeyCodes.D,
-                Y:Phaser.Input.Keyboard.KeyCodes.T,
-                H:Phaser.Input.Keyboard.KeyCodes.G,
-                G:Phaser.Input.Keyboard.KeyCodes.F,
-                J:Phaser.Input.Keyboard.KeyCodes.H,
-                NUMPAD_FIVE:Phaser.Input.Keyboard.KeyCodes.I,
-                NUMPAD_TWO:Phaser.Input.Keyboard.KeyCodes.K,
-                NUMPAD_ONE:Phaser.Input.Keyboard.KeyCodes.J,
-                NUMPAD_THREE:Phaser.Input.Keyboard.KeyCodes.L,
+                Y:Phaser.Input.Keyboard.KeyCodes.Y,
+                H:Phaser.Input.Keyboard.KeyCodes.H,
+                G:Phaser.Input.Keyboard.KeyCodes.G,
+                J:Phaser.Input.Keyboard.KeyCodes.J,
+                NUMPAD_FIVE:Phaser.Input.Keyboard.KeyCodes.NUMPAD_FIVE,
+                NUMPAD_TWO:Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO,
+                NUMPAD_ONE:Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE,
+                NUMPAD_THREE:Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE,
                 NUMPAD_ZERO: Phaser.Input.Keyboard.KeyCodes.ALT,
                 SPACE:Phaser.Input.Keyboard.KeyCodes.SPACE
             });
@@ -501,8 +507,8 @@ class Scene2 extends Phaser.Scene {
                 if (bullet) {
                     bullet.fire(player2);
                     this.gunShotMusic.play(gunShotMusicConfig);
-                    this.physics.add.collider(player3, bullet, playerOneHit);
-                    this.physics.add.collider(player4, bullet, playerTwoHit);
+                    this.physics.add.collider(player3, bullet, playerThreeHit);
+                    this.physics.add.collider(player4, bullet, playerFourHit);
                 }
                 hasZeroBeenPressed = true;
             }
